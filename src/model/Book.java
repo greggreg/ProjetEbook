@@ -24,19 +24,34 @@ public class Book {
 	private ArrayList<Freehand> freehand = new ArrayList<Freehand>();
 	private ArrayList<Note> notes = new ArrayList<Note>();
 	BD bd = new BD("/home/putz/Documents/PROJETS/Ebook/EBOOK_Deantony/READER/Sony_Reader/database/books.db");
-	//	private static String path = "/home/putz/Documents/PROJETS/Ebook/EBOOK_Deantony/READER/";
 	private static String path = "/home/putz/Documents/PROJETS/Ebook/EBOOK_Deantony/READER/";
-
-	public Book(int id_pdf)
+	private String pathEbook, pathSortie;
+	
+	public Book(int id_pdf, String pathEbook, String pathSortie) throws DocumentException, IOException
 	{
 		this.id_pdf = id_pdf;
+		this.pathEbook = pathEbook;
+		this.pathSortie = pathSortie;
 		freehand = bd.getBookFreehands(id_pdf);
 		notes = bd.getBookNotes(id_pdf);
+		exporter();
 	}
 
 	public int getId_pdf()
 	{
 		return id_pdf;
+	}
+
+	public String getPathSortie() {
+		return pathSortie;
+	}
+
+	public void setPathSortie(String pathSortie) {
+		this.pathSortie = pathSortie;
+	}
+
+	public String getPathEbook() {
+		return pathEbook;
 	}
 
 	public ArrayList<Freehand> getFreehand() {
@@ -53,41 +68,40 @@ public class Book {
 	}
 
 
-	public static void main(String[] args) throws DocumentException, IOException
+	public void exporter() throws DocumentException, IOException
 	{
 		Scanner in = new Scanner(System.in);
 		System.out.println("Entrez un ID");
 		int id_pdf = in.nextInt();
-		//		int id_pdf = 208;
-		Book book = new Book(id_pdf);
+//		//		int id_pdf = 208;
+//		Book book = new Book(id_pdf, path, "/home/putz/Bureau");
 		ArrayList<SVGParser> svg = new ArrayList<SVGParser>();
 		ArrayList<MemoParser> memo = new ArrayList<MemoParser>();
 
-		for (int i=0; i<book.getFreehand().size(); i++)
+		for (int i=0; i<getFreehand().size(); i++)
 		{
 			//System.out.println(book.getFreehand().get(i).getFile_path());
-			String input = path+book.getFreehand().get(i).getFile_path();
-			String pdfFile = path+book.getBD().getBook(id_pdf).getFile_path();
-			int numPage = (int) book.getFreehand().get(i).getPage();
+			String input = path+getFreehand().get(i).getFile_path();
+			String pdfFile = path+getBD().getBook(id_pdf).getFile_path();
+			int numPage = (int) getFreehand().get(i).getPage();
 
 			svg.add(new SVGParser(input, pdfFile, numPage+1));
 		}
 
-		for (int i=0; i<book.getNotes().size(); i++)
+		for (int i=0; i<getNotes().size(); i++)
 		{
-			if (book.getNotes().get(i).getMarkup_type() == 11)
+			if (getNotes().get(i).getMarkup_type() == 11)
 			{
 				//System.out.println(book.getNotes().get(i).getFile_path());
-				String input = path+book.getNotes().get(i).getFile_path();
-				String pdfFile = path+book.getBD().getBook(id_pdf).getFile_path();
-				int numPage = (int) book.getNotes().get(i).getPage();
-				String txtAnnote = book.getNotes().get(i).getMarked_text();
+				String input = path+getNotes().get(i).getFile_path();
+				String pdfFile = path+getBD().getBook(id_pdf).getFile_path();
+				int numPage = (int) getNotes().get(i).getPage();
+				String txtAnnote = getNotes().get(i).getMarked_text();
 
 				memo.add(new MemoParser(input, pdfFile, numPage+1, txtAnnote));
 			}
 		}
-
-		book.addAllNotes(svg, memo);
+		addAllNotes(svg, memo);
 	}
 
 
@@ -100,9 +114,8 @@ public class Book {
 		float width = rect.getWidth();
 
 		int n = reader.getNumberOfPages();
-		System.out.println("Document doc = new Document(new Rectangle("+width+", "+height+");");
 		Document doc = new Document(new Rectangle(width, height));
-		PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream("res/output.pdf"));
+		PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(getPathSortie() + "output.pdf"));
 		doc.open();
 		PdfContentByte cb = writer.getDirectContent();
 

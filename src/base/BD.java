@@ -96,8 +96,8 @@ public class BD {
 	 * @param id
 	 * @return book
 	 */
-	public Book getBook(int id) {
-		Book res = null;
+	public BDBook getBook(int id) {
+		BDBook res = null;
 		Statement statement = null;
 		ResultSet resultSet = null;
 		try {
@@ -107,7 +107,7 @@ public class BD {
 
 			while (resultSet.next()) {
 
-				res = new Book(id, resultSet.getString("Title"),
+				res = new BDBook(id, resultSet.getString("Title"),
 						resultSet.getString("author"),
 						resultSet.getString("file_path"),
 						resultSet.getString("file_name"));
@@ -233,8 +233,8 @@ public class BD {
 	 * 
 	 * @return ArrayList<Book>
 	 */
-	public ArrayList<Book> getAllBooks() {
-		ArrayList<Book> res = new ArrayList<Book>();
+	public ArrayList<BDBook> getAllBooks() {
+		ArrayList<BDBook> res = new ArrayList<BDBook>();
 		 Statement statement = null;
 		 ResultSet resultSet = null;
 		
@@ -245,7 +245,7 @@ public class BD {
 			while (resultSet.next()) {
 				
 				
-				res.add(new Book(resultSet.getInt("_id"), resultSet.getString("Title"),resultSet.getString("author"), resultSet.getString("file_path"), resultSet.getString("file_name")));
+				res.add(new BDBook(resultSet.getInt("_id"), resultSet.getString("Title"),resultSet.getString("author"), resultSet.getString("file_path"), resultSet.getString("file_name")));
 			}
 
 		} catch (SQLException e) {
@@ -265,8 +265,8 @@ public class BD {
 		return res;
 	}
 
-	public ArrayList<Book> getAnnotedBooks() {
-		ArrayList<Book> res = new ArrayList<Book>();
+	public ArrayList<BDBook> getAnnotedBooks() {
+		ArrayList<BDBook> res = new ArrayList<BDBook>();
 		Statement statement = null;
 		ResultSet resultSet = null;
 		try {
@@ -278,7 +278,7 @@ public class BD {
 					.executeQuery(T1+" UNION " + T2 + " INTERSECT " + T3) ;
 			
 			while (resultSet.next()) {
-				res.add(new Book(resultSet.getInt("b._id"),resultSet.getString("b.title"),resultSet.getString("b.author"),resultSet.getString("b.file_path"),resultSet.getString("b.file_name")));
+				res.add(new BDBook(resultSet.getInt("b._id"),resultSet.getString("b.title"),resultSet.getString("b.author"),resultSet.getString("b.file_path"),resultSet.getString("b.file_name")));
 			}
 			
 
@@ -420,10 +420,10 @@ public ArrayList<Note> getBookNotes(int id){
 		BD bd = new BD("Sony_Reader\\database\\books.db");
 		System.out.println("connected");
 		ArrayList<Note> list= new ArrayList<Note> (bd.getBookNotes(27));
-		ArrayList<Book> list2= new ArrayList<Book> (bd.getAnnotedBooks());
+		ArrayList<BDBook> list2= new ArrayList<BDBook> (bd.getAnnotedBooks());
 		
 		
-		for(Book b: list2)
+		for(BDBook b: list2)
 		System.out.println(b.getId()+ "" +b.getTitle());
 
 		bd.closeBd();
