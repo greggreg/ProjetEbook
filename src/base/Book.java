@@ -1,10 +1,7 @@
 package base;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Book {
-	
+
 	private int id;
 	private String title;
 	private String author;
@@ -33,9 +30,9 @@ public class Book {
 	private String conforms_to;
 	private String description;
 	private String logos;
-	
-	
-	
+
+
+
 	public Book(int id, String title, String author, String kana_title,
 			String kana_author, String title_key, String author_key,
 			int source_id, int added_date, int modified_date, int reading_time,
@@ -45,7 +42,7 @@ public class Book {
 			String periodical_name, String kana_periodical_name,
 			String periodical_name_key, String publication_date,
 			String conforms_to, String description, String logos) {
-		
+
 		this.id = id;
 		this.title = title;
 		this.author = author;
@@ -75,8 +72,8 @@ public class Book {
 		this.description = description;
 		this.logos = logos;
 	}
-	
-	
+
+
 	public Book(int id, String title, String author, String file_path, String file_name){
 		this(id,title,author,"","","","",-1,-1,-1,-1,-1,file_path,file_name,-1,"","",-1,-1,-1,"","","","","","","","");
 	}
@@ -367,8 +364,8 @@ public class Book {
 
 	@Override
 	public String toString() {
-		
-		
+
+
 		return "Book [id=" + id + ", title=" + title + ", author=" + author
 				+ "\n kana_title=" + kana_title + "\n kana_author=" + kana_author
 				+ ", title_key=" + title_key + "\n author_key=" + author_key
@@ -386,6 +383,6 @@ public class Book {
 				+ "\n publication_date=" + publication_date + "\n conforms_to="
 				+ conforms_to + "\n description=" + description + "\n logos=";
 	}
-	
+
 
 }
