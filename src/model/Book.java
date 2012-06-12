@@ -81,7 +81,7 @@ public class Book {
 				String input = path+book.getNotes().get(i).getFile_path();
 				String pdfFile = path+book.getBD().getBook(id_pdf).getFile_path();
 				int numPage = (int) book.getNotes().get(i).getPage();
-				String txtAnnote = book.getNotes().get(i).getName();
+				String txtAnnote = book.getNotes().get(i).getMarked_text();
 
 				memo.add(new MemoParser(input, pdfFile, numPage+1, txtAnnote));
 			}

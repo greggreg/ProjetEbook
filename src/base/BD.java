@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 public class BD {
 	private Connection conn;
@@ -229,18 +228,57 @@ public class BD {
 	/**
 	 * retourne la liste des livres annot�s (freehand ou note)
 	 */
+	/**
+	 * retourne la totalit� des livre dans la base
+	 * 
+	 * @return ArrayList<Book>
+	 */
+	public ArrayList<Book> getAllBooks() {
+		ArrayList<Book> res = new ArrayList<Book>();
+		 Statement statement = null;
+		 ResultSet resultSet = null;
+		
+		try {
+			statement = conn.createStatement();
+			 resultSet = statement.executeQuery(("SELECT  *  FROM books"));
+			
+			while (resultSet.next()) {
+				
+				
+				res.add(new Book(resultSet.getInt("_id"), resultSet.getString("Title"),resultSet.getString("author"), resultSet.getString("file_path"), resultSet.getString("file_name")));
+			}
+
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		finally{
+			try {
+				statement.close();
+				resultSet.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			
+		}
+		return res;
+	}
+
 	public ArrayList<Book> getAnnotedBooks() {
 		ArrayList<Book> res = new ArrayList<Book>();
 		Statement statement = null;
 		ResultSet resultSet = null;
 		try {
 			statement = conn.createStatement();
-			
+			String T1 ="SELECT distinct b._id ,b.title,b.author,b.file_path,b.file_name FROM books b,annotation a where a.content_id=b._id";  
+			String T2="SELECT distinct b._id ,b.title,b.author,b.file_path,b.file_name FROM books b,freehand f where f.content_id=b._id" ; 
+			String T3="SELECT b._id ,b.title,b.author,b.file_path,b.file_name from books b where b.mime_type='application/pdf'";
 			resultSet = statement
-					.executeQuery("SELECT distinct b._id ,b.title,b.author,b.file_path,file_name FROM books b,annotation a, freehand f where a.content_id=b._id or b._id=f.content_id and " + pdfOnly);
+					.executeQuery(T1+" UNION " + T2 + " INTERSECT " + T3) ;
 			
 			while (resultSet.next()) {
-				res.add(new Book(resultSet.getInt("_id"),resultSet.getString("title"),resultSet.getString("author"),resultSet.getString("file_path"),resultSet.getString("file_name")));
+				res.add(new Book(resultSet.getInt("b._id"),resultSet.getString("b.title"),resultSet.getString("b.author"),resultSet.getString("b.file_path"),resultSet.getString("b.file_name")));
 			}
 			
 
@@ -339,7 +377,7 @@ public ArrayList<Note> getBookNotes(int id){
 		try {
 			statement = conn.createStatement();
 			resultSet = statement
-					.executeQuery("SELECT distinct a._id,a.name, a.content_id,a.added_date,a.modified_date,a.mark,a.mark_end,a.page,a.total_page,a.file_path,a.markup_type FROM books b,annotation a where a.content_id="
+					.executeQuery("SELECT distinct a._id,a.name, a.content_id,a.added_date,a.modified_date,a.mark,a.mark_end,a.page,a.total_page,a.file_path,a.markup_type,a.marked_text FROM books b,annotation a where a.content_id="
 							+ id );
 			
 			while (resultSet.next()) {
@@ -347,7 +385,7 @@ public ArrayList<Note> getBookNotes(int id){
 				res.add(new Note(resultSet.getInt("_id"),resultSet.getString("name"), resultSet
 						.getInt("content_id"),resultSet.getString("added_date"),resultSet.getString("modified_date"),new PdfLoc( resultSet.getString("mark")),new PdfLoc( resultSet
 								.getString("mark_end")), resultSet.getInt("page"),resultSet.getInt("total_page"), resultSet
-								.getString("file_path"), resultSet.getInt("markup_type")));
+								.getString("file_path"), resultSet.getInt("markup_type"),resultSet.getString("marked_text")));
 			}
 
 		} catch (SQLException e) {
