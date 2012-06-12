@@ -1,15 +1,19 @@
 package model;
 
-import java.io.File;
 import java.io.FileOutputStream;
-import java.util.List;
 import java.util.ArrayList;
-import com.itextpdf.text.Annotation;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.pdf.*;
-import com.itextpdf.text.BaseColor;
+import java.util.List;
 
-import base.*;
+import base.BD;
+import base.Book;
+
+import com.itextpdf.text.Annotation;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfImportedPage;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfWriter;
 
 public class EbookModel {
 	/* input -> output */
@@ -20,7 +24,7 @@ public class EbookModel {
 	BD bd;
 
 	public EbookModel() throws Exception {
-		this("/media/hd/Sony_Reader/database/books.db", "/tmp/");
+		this("/media/READER/Sony_Reader/database/books.db", "/tmp/");
 	}
 	
 	public EbookModel(String inDir, String outDir) throws Exception {
@@ -82,7 +86,7 @@ public class EbookModel {
 		/* XXX check if id exists */
 
 		try {
-			ex = new Export(id, "/media/hd/", outDir, bd);
+			ex = new Export(id, "/media/READER/", outDir, bd);
 //			ex.exporter();
 		}
 		catch(Exception e) {

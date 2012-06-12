@@ -14,8 +14,7 @@ public class Main {
 			else
 				System.err.println("unknown modifier '"+args[0]+"'");
 		try {
-			model = new EbookModel("/media/hd/Sony_Reader/database/books.db", "/tmp/");
-//			model = new EbookModel("/home/mb/save_ebook/hd/Sony_Reader/", "/tmp/");
+			model = new EbookModel("/media/READER/Sony_Reader/database/books.db", "/tmp/");
 			controller = new EbookController(model, type);
 			controller.displayView();
 			controller.closeView();
