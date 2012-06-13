@@ -39,7 +39,7 @@ public class EbookModel {
 		/* XXX check if id exists */
 
 		try {
-			new Export(id, "/media/READER/", outDir, bd);
+			new Export(id, inDir, outDir, bd);
 		}
 		catch(Exception e) {
 			System.err.println("buildOutput: "+e);
