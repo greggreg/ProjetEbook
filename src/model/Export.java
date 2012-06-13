@@ -24,7 +24,7 @@ public class Export {
 	private ArrayList<Note> notes = new ArrayList<Note>();
 	private String pathEbook, pathSortie;
 	BD bd;
-	
+
 	public Export(int id_pdf, String pathEbook, String pathSortie, BD bd) throws DocumentException, IOException
 	{
 		this.bd = bd;
@@ -99,7 +99,7 @@ public class Export {
 	}
 
 
-	public void addAllNotes(ArrayList<SVGParser> svg, ArrayList<MemoParser> memo) throws IOException, DocumentException
+	private void addAllNotes(ArrayList<SVGParser> svg, ArrayList<MemoParser> memo) throws IOException, DocumentException
 	{
 		//		System.out.println("pdf:"+svg.get(0).getPdfFile());
 		PdfReader reader = new PdfReader(svg.get(0).getPdfFile());
@@ -107,13 +107,17 @@ public class Export {
 		float height = rect.getHeight();
 		float width = rect.getWidth();
 
+		int col = 1;
+		if (svg.get(0).getPdfFile().endsWith("_1col.pdf")) //gros bluff!
+			col = 2;
+
 		int n = reader.getNumberOfPages();
 		Document doc = new Document(new Rectangle(width, height));
 		PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(getPathSortie() + "output.pdf"));
 		doc.open();
 		PdfContentByte cb = writer.getDirectContent();
 
-		for (int i=1; i<=n; i++) 
+		for (int i=1; i<=n; i+=col) 
 		{
 			doc.newPage();
 			PdfImportedPage p = writer.getImportedPage(reader, i);
@@ -121,7 +125,8 @@ public class Export {
 
 			for (int l=0; l<svg.size(); l++)
 			{
-				if (i == svg.get(l).getNumPage())
+				int numPage = svg.get(l).getNumPage();
+				if (i == numPage/col)
 				{
 					ArrayList<String> allPoints = svg.get(l).getPoints();
 					for (int j=0; j<allPoints.size(); j++)
@@ -129,15 +134,24 @@ public class Export {
 						String points = allPoints.get(j);
 						String coord[] = points.split(" ");
 						for (int k=0; k<coord.length; k++)
-						{		
-							float x = Integer.parseInt(coord[k].split(",")[0]);
-							float y = height - Integer.parseInt(coord[k].split(",")[1]);
+						{	
+							float x,y;
+							if (numPage % col == 0)
+							{
+								x = Integer.parseInt(coord[k].split(",")[0])/col;
+								y = height/col - (Integer.parseInt(coord[k].split(",")[1])/col);
+							}
+							else
+							{
+								x = Integer.parseInt(coord[k].split(",")[0])/col;
+								y = height - (Integer.parseInt(coord[k].split(",")[1])/col);
+							}
 							if (k==0) cb.moveTo(x, y);
 							else cb.lineTo(x, y);
 						}
 					}
 					cb.stroke();
-					System.out.println("ajout d'une super note page" + svg.get(l).getNumPage());
+					System.out.println("ajout d'une super note page" + numPage/col);
 				}
 			}
 
@@ -147,7 +161,7 @@ public class Export {
 				if (i == memo.get(j).getNumPage())
 				{
 					doc.add(new Annotation(memo.get(j).getTxtAnnote(), memo.get(j).getNote(), dx, 0, 50, 50));
-					System.out.println("ajout d'une super note page"+memo.get(j).getNumPage());
+					System.out.println("ajout d'une super note page" + memo.get(j).getNumPage());
 					dx += 20;
 				}
 			}
