@@ -20,7 +20,6 @@ public class Main {
 				System.err.println("eexporter [-c] [-i <input directory>] [-o <output directory]");
 				System.exit(0);
 			}
-
 		try {
 			model = new EbookModel(in, out);
 			controller = new EbookController(model, type);
@@ -30,6 +29,5 @@ public class Main {
 		catch(Exception e) {
 			System.err.println(e);
 		}
-
 	}
 }

@@ -23,7 +23,8 @@ public class Export {
 	private ArrayList<Freehand> freehand = new ArrayList<Freehand>();
 	private ArrayList<Note> notes = new ArrayList<Note>();
 	private String pathEbook, pathSortie;
-	BD bd;
+	private static final String endComposedPdf = "_1col.pdf";
+	private BD bd;
 
 	public Export(int id_pdf, String pathEbook, String pathSortie, BD bd) throws DocumentException, IOException
 	{
@@ -74,7 +75,6 @@ public class Export {
 
 		for (int i=0; i<getFreehand().size(); i++)
 		{
-			//System.out.println(book.getFreehand().get(i).getFile_path());
 			String input = pathEbook+getFreehand().get(i).getFile_path();
 			String pdfFile = pathEbook+getBD().getBook(id_pdf).getFile_path();
 			int numPage = (int) getFreehand().get(i).getPage();
@@ -86,7 +86,6 @@ public class Export {
 		{
 			if (getNotes().get(i).getMarkup_type() == 11)
 			{
-				//System.out.println(book.getNotes().get(i).getFile_path());
 				String input = pathEbook+getNotes().get(i).getFile_path();
 				String pdfFile = pathEbook+getBD().getBook(id_pdf).getFile_path();
 				int numPage = (int) getNotes().get(i).getPage();
@@ -101,14 +100,13 @@ public class Export {
 
 	private void addAllNotes(ArrayList<SVGParser> svg, ArrayList<MemoParser> memo) throws IOException, DocumentException
 	{
-		//		System.out.println("pdf:"+svg.get(0).getPdfFile());
 		PdfReader reader = new PdfReader(svg.get(0).getPdfFile());
 		Rectangle rect = reader.getPageSize(1);
 		float height = rect.getHeight();
 		float width = rect.getWidth();
 
 		int col = 1;
-		if (svg.get(0).getPdfFile().endsWith("_1col.pdf")) //gros bluff!
+		if (svg.get(0).getPdfFile().endsWith(endComposedPdf)) //gros bluff!
 			col = 2;
 
 		int n = reader.getNumberOfPages();

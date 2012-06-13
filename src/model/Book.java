@@ -73,14 +73,11 @@ public class Book {
 		Scanner in = new Scanner(System.in);
 		System.out.println("Entrez un ID");
 		int id_pdf = in.nextInt();
-//		//		int id_pdf = 208;
-//		Book book = new Book(id_pdf, path, "/home/putz/Bureau");
 		ArrayList<SVGParser> svg = new ArrayList<SVGParser>();
 		ArrayList<MemoParser> memo = new ArrayList<MemoParser>();
 
 		for (int i=0; i<getFreehand().size(); i++)
 		{
-			//System.out.println(book.getFreehand().get(i).getFile_path());
 			String input = path+getFreehand().get(i).getFile_path();
 			String pdfFile = path+getBD().getBook(id_pdf).getFile_path();
 			int numPage = (int) getFreehand().get(i).getPage();
@@ -92,7 +89,6 @@ public class Book {
 		{
 			if (getNotes().get(i).getMarkup_type() == 11)
 			{
-				//System.out.println(book.getNotes().get(i).getFile_path());
 				String input = path+getNotes().get(i).getFile_path();
 				String pdfFile = path+getBD().getBook(id_pdf).getFile_path();
 				int numPage = (int) getNotes().get(i).getPage();
@@ -107,7 +103,6 @@ public class Book {
 
 	public void addAllNotes(ArrayList<SVGParser> svg, ArrayList<MemoParser> memo) throws IOException, DocumentException
 	{
-		//		System.out.println("pdf:"+svg.get(0).getPdfFile());
 		PdfReader reader = new PdfReader(svg.get(0).getPdfFile());
 		Rectangle rect = reader.getPageSize(1);
 		float height = rect.getHeight();
