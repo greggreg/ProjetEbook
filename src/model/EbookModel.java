@@ -1,19 +1,10 @@
 package model;
 
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import base.BD;
 import base.Book;
-
-import com.itextpdf.text.Annotation;
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfImportedPage;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfWriter;
 
 public class EbookModel {
 	/* input -> output */
@@ -21,17 +12,17 @@ public class EbookModel {
 	private List<Book> books;
 	private EbookListener listener;
 	private String inDir, outDir;
-	BD bd;
+	private BD bd;
 
 	public EbookModel() throws Exception {
-		this("/media/READER/Sony_Reader/database/books.db", "/tmp/");
+		this("/media/READER/", "/tmp/");
 	}
 	
 	public EbookModel(String inDir, String outDir) throws Exception {
 		this.inDir = inDir;
 		this.outDir = outDir;
 		files = new ArrayList<String>();
-		bd = new BD(inDir);
+		bd = new BD(this.inDir);
 		
 		books = new ArrayList<Book>(bd.getAllBooks());
 		
@@ -40,67 +31,19 @@ public class EbookModel {
 		}
 	}
 
-	public void createOutput(String input, String output) throws Exception {
-		PdfReader reader;
-		PdfWriter writer;
-		Document doc;
-		PdfContentByte cb;
-		int n;
-
-		reader = new PdfReader(input);
-		doc = new Document();
-		writer = PdfWriter.getInstance(doc, new FileOutputStream(output));
-
-		n  = reader.getNumberOfPages();
-		doc.open();
-		cb = writer.getDirectContent();
-		
-		for (int i = 0; i < n; i++) {
-			doc.newPage();
-
-			/* first page is 1, not 0, so i+1 */
-			PdfImportedPage p = writer.getImportedPage(reader, i+1);
-			cb.addTemplate(p, 0, 0);
-			
-			if (i == 0) {
-				cb.saveState();
-				cb.setColorStroke(BaseColor.GREEN);
-				cb.moveTo(0,0);
-				cb.lineTo(50,50);
-				cb.lineTo(75,200);
-				cb.stroke();
-				cb.restoreState();
-				doc.add(new Annotation("hello", "hello, world", 0, 0, 50, 50));
-			}
-		}
-		doc.close();
-
-		fireEbookChanged(output);
-	}
 	
 	public void buildOutput(String input) {
-		Export ex;
 		int id;
 
 		id = Integer.decode(input);
 		/* XXX check if id exists */
 
 		try {
-			ex = new Export(id, "/media/READER/", outDir, bd);
-//			ex.exporter();
+			new Export(id, "/media/READER/", outDir, bd);
 		}
 		catch(Exception e) {
 			System.err.println("buildOutput: "+e);
 		}
-		
-		/*
-		try {
-			if (files.contains(input))
-				createOutput(input, outDir+(new File(input)).getName());
-		}
-		catch(Exception e) {
-			System.err.println("buildOutput: " +e);
-		}*/
 	}
 	
 	public List<String> getFiles() {
@@ -115,7 +58,12 @@ public class EbookModel {
 		listener = null;
 	}
 	
-	void fireEbookChanged(String output) {
+	public void fireEbookChanged(String output) {
 		listener.ebookChanged(new EbookChangedEvent(this, output));
+	}
+	
+	protected void finalize() throws Throwable {
+		bd.closeBd();
+		System.err.println("db closed");
 	}
 }

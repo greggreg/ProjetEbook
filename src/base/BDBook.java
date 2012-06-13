@@ -1,8 +1,5 @@
 package base;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class BDBook {
 	
 	private int id;

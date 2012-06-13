@@ -3,7 +3,6 @@ package model;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import base.BD;
 import base.Freehand;

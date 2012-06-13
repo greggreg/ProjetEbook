@@ -10,11 +10,12 @@ import java.util.ArrayList;
 public class BD {
 	private Connection conn;
 	private final static String pdfOnly="b.mime_type == 'application/pdf'";
+	private final static String pathToDB = "Sony_Reader/database/books.db";
 
 	public BD(String path) {
 		try {
 			Class.forName("org.sqlite.JDBC");
-			conn = DriverManager.getConnection("jdbc:sqlite:" + path);
+			conn = DriverManager.getConnection("jdbc:sqlite:" + path+"/"+pathToDB);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -54,7 +55,7 @@ public class BD {
 		return b;
 	}
 	/**
-	 * retourne la totalit��� des livre dans la base
+	 * retourne la totalit��������� des livre dans la base
 	 * 
 	 * @return ArrayList<Book>
 	 *//*
@@ -132,7 +133,7 @@ public class BD {
 	}
 
 	/**
-	 * retourne l'annotation correspondant ��� l'id
+	 * retourne l'annotation correspondant ��������� l'id
 	 * 
 	 * @param id
 	 * @return annotation
@@ -226,10 +227,10 @@ public class BD {
 	}
 
 	/**
-	   * retourne la liste des livres annot���s (freehand ou note)
+	   * retourne la liste des livres annot���������s (freehand ou note)
 	   */
 	/**
-	 * retourne la totalit��� des livre dans la base
+	 * retourne la totalit��������� des livre dans la base
 	 * 
 	 * @return ArrayList<Book>
 	 */
@@ -363,7 +364,7 @@ public class BD {
 		return res;
 	}
 	/**
-	 * retourne une liste de Notes pour un livre donn���
+	 * retourne une liste de Notes pour un livre donn���������
 	 * @param id
 	 * @return
 	 */

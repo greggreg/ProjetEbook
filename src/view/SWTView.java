@@ -28,7 +28,6 @@ public class SWTView extends EbookView implements Listener {
 
 	public SWTView(EbookController controller, List<String> files) {
 		super(controller);
-		
 		buildView(files);
 	}
 
@@ -73,9 +72,13 @@ public class SWTView extends EbookView implements Listener {
 		listConverted.add(e.getNewOutput());
 	}
 
-	public void handleEvent(Event event) {				
-		for (int i : list.getSelectionIndices())
-			getController().notifyEbookChanged(list.getItem(i));
+	public void handleEvent(Event event) {			
+		String input;
+		
+		for (int i : list.getSelectionIndices()) {
+			input = list.getItem(i).split("\\|")[0];
+			getController().notifyEbookChanged(input);
+		}
 	}
 
 	public void display() {

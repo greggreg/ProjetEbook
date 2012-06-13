@@ -59,7 +59,7 @@ public class ConsoleView extends EbookView implements PropertyChangeListener {
 				else if (line.startsWith("!export")) {
 					try {
 						String tmps = line.split(" ")[1];
-						int tmp = Integer.decode(tmps);
+						Integer.decode(tmps);
 						propertyChange(new PropertyChangeEvent(this, "input", input, tmps));
 
 					}
