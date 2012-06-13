@@ -1,18 +1,8 @@
 package model;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 import org.jdom2.input.SAXBuilder;
-
-import com.itextpdf.text.Annotation;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfImportedPage;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfWriter;
 
 public class MemoParser {
 
@@ -51,27 +41,5 @@ public class MemoParser {
 
 	public String getTxtAnnote() {
 		return txtAnnote;
-	}
-
-	public void addNotes() throws IOException, DocumentException {
-		PdfReader reader = new PdfReader(getPdfFile());
-		int n = reader.getNumberOfPages();
-		Document doc = new Document();
-		PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(getPdfFile()));
-		doc.open();
-		PdfContentByte cb = writer.getDirectContent();
-
-		for (int i = 1; i <= n; i++) {
-			doc.newPage();
-			PdfImportedPage p = writer.getImportedPage(reader, i);
-			cb.addTemplate(p, 0, 0);
-
-			if (i == getNumPage())
-			{
-				doc.add(new Annotation("Note", getNote(), 0, 0, 50, 50));
-				System.out.println("ajout d'une super note page"+getNumPage());
-			}
-		}
-		doc.close();
 	}
 }
