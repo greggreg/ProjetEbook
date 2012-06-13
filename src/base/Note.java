@@ -1,7 +1,8 @@
 package base;
 //markup type=2
 public class Note extends Annotation {
-	
+	protected String mime_type;
+	protected String marked_text;
 
 	public Note(int id, String name, int idBook, String added_date,
 			String modified_date, PdfLoc mark, PdfLoc mark_end, double page,
@@ -9,7 +10,6 @@ public class Note extends Annotation {
 		super(id, name, idBook, added_date, modified_date, mark, mark_end, page,
 				total_page, file_path, markup_type);
 		this.marked_text=marked_text;
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getMime_type() {
@@ -29,9 +29,4 @@ public class Note extends Annotation {
 		this.marked_text= marked_text;
 	}
 
-	protected String mime_type;
-	protected String marked_text;
-
-
-	
 }
