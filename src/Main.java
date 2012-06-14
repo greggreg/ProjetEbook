@@ -6,7 +6,7 @@ public class Main {
 		EbookController.viewType type;
 		EbookController controller;
 		EbookModel model;
-		String in = "/media/READER", out = "/tmp/";
+		String in = "/media/READER/", out = "/tmp/";
 
 		type = EbookController.viewType.SWT;
 		for (int i = 0; i < args.length; i++) 
