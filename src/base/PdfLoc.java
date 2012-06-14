@@ -48,7 +48,6 @@ public class PdfLoc {
 	String tmp=chain.substring(8);
 	String tmp2=tmp.substring(0, tmp.length()-1);
 	String[] tbl=tmp2.split(",");
-	System.out.println(chain);
 
 	ref=tbl[0];
 	page=Integer.decode(tbl[1]);

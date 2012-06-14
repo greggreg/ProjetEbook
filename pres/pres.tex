@@ -25,19 +25,22 @@
 \title{Exportation de notes prises sur un Sony PRS-T1}
 \author{Tuteur: Julien De Antoni\\Grégory Putz, Ahma Bekele, Mathieu Bivert}
 \date{\oldstylenums{Juin 2012}}
+
+
 \begin{document}
 \frame{\titlepage}
 
 \section{Introduction}
-\begin{frame}
-  \frametitle{Introduction}
-  \centering
-  \tableofcontents
-\end{frame}
 
 \begin{frame}
   \frametitle{Introduction}
   some more introductive text
+\end{frame}
+
+\begin{frame}
+  \frametitle{Introduction}
+  \centering
+  \tableofcontents
 \end{frame}
 
 % \begin{frame}
@@ -46,7 +49,6 @@
 %   \vfill
 %   \centering
 %   \includegraphics[scale=1]{prs-t1.png}
-%   \tableofcontents
 % \end{figure}}$
 % \end{frame}
 
@@ -63,9 +65,9 @@
 %   \pause Notably usefull for researchers, avid readers, etc.
 % \end{frame}
 
-\section{Problematic}
+\section{Specifications}
 \begin{frame}
-  \frametitle{Problematic \& Objectif}
+  \frametitle{Specifications}
   \begin{itemize}
   \pause \item Sharing notes;
   \pause \item No standardized note taking format.
@@ -75,10 +77,28 @@
       \item half in XML (SVG).
     \end{itemize}
   \pause In a nearly comprehensible format.
-  \pause \item client requests program to run GNU/Linux,
-  \pause Sony software is closed source, windows only (although
-  it may run on wine).
   \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Specifications : client requests}
+  \begin{itemize}
+    \item GNU/Linux,
+    \pause Sony software is closed source, windows only (although
+    it may run on wine), and not supporting cut2col (used by the
+    client);
+    \pause \item main task : export PDF with notes; \pause others :
+    import PDF, manage Epub, etc.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Specifications: existing work}
+  Calibre : software to import/export ebook to a reader\\
+  $\rightarrow$ create a plugin for calibre in Python,\\
+  \pause while trying software notes format (xournal, okular),
+  found PDF has annotations\\
+  \pause some Java APIs found to manage PDF.
 \end{frame}
 
 \section{Organisation}

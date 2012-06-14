@@ -27,7 +27,7 @@ public class EbookModel {
 		books = new ArrayList<Book>(bd.getAllBooks());
 		
 		for (Book b : books) {
-			files.add(b.getId()+"|"+b.getTitle());
+			files.add(b.getId()+" | "+b.getTitle());
 		}
 	}
 
@@ -39,10 +39,12 @@ public class EbookModel {
 		/* XXX check if id exists */
 
 		try {
-			new Export(id, inDir, outDir, bd);
+			Book b = bd.getBook(id);
+			new Export(id, inDir, outDir, bd, b.getFile_name());
+			fireEbookChanged(outDir+"/"+b.getFile_name());
 		}
 		catch(Exception e) {
-			System.err.println("buildOutput: "+e);
+			e.printStackTrace();
 		}
 	}
 	

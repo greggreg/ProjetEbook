@@ -46,7 +46,7 @@ public class ConsoleView extends EbookView implements PropertyChangeListener {
 		end = false;
 
 		System.out.println("Ebook converter; type !list to list ebooks, !quit to leave");
-		
+
 		while (end == false) {
 			try {
 				line = in.readLine();
@@ -61,7 +61,6 @@ public class ConsoleView extends EbookView implements PropertyChangeListener {
 						String tmps = line.split(" ")[1];
 						Integer.decode(tmps);
 						propertyChange(new PropertyChangeEvent(this, "input", input, tmps));
-
 					}
 					catch(Exception e) {
 						System.err.println("error: !export <id>");

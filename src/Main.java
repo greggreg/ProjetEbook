@@ -6,7 +6,7 @@ public class Main {
 		EbookController.viewType type;
 		EbookController controller;
 		EbookModel model;
-		String in = "/media/READER", out = "/tmp/";
+		String in = "/media/READER/", out = "/tmp/";
 
 		type = EbookController.viewType.SWT;
 		for (int i = 0; i < args.length; i++) 
@@ -17,7 +17,7 @@ public class Main {
 			else if (args[i].equals("-o") && i+1 < args.length)
 				out = args[i+1];
 			else {
-				System.err.println("eexporter [-c] [-i <input directory>] [-o <output directory]");
+				System.err.println("exporter [-c] [-i <input directory>] [-o <output directory]");
 				System.exit(0);
 			}
 		try {

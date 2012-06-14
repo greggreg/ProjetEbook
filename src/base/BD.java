@@ -31,12 +31,11 @@ public class BD {
 		try {
 			statement = conn.createStatement();
 			resultSet = statement
-					.executeQuery("SELECT * FROM books b WHERE _id=" + id + " and " + pdfOnly );
+					.executeQuery("SELECT * FROM books b WHERE _id=" + id + " and " + pdfOnly);
 
 			b= resultSet.next();
 
 		} catch (SQLException e) {
-
 			e.printStackTrace();
 		} 
 		finally {
@@ -111,7 +110,8 @@ public class BD {
 			resultSet = statement.executeQuery(("SELECT  *  FROM books"));
 
 			while (resultSet.next()) {
-				res.add(new Book(resultSet.getInt("_id"), resultSet.getString("Title"),resultSet.getString("author"), resultSet.getString("file_path"), resultSet.getString("file_name")));
+				if (resultSet.getString("file_name").endsWith("pdf"))
+					res.add(new Book(resultSet.getInt("_id"), resultSet.getString("Title"),resultSet.getString("author"), resultSet.getString("file_path"), resultSet.getString("file_name")));
 			}
 
 		} catch (SQLException e) {
@@ -202,12 +202,11 @@ public class BD {
 	}
 
 	/**
-	 * retourne une liste de Notes pour un livre donn���������
+	 * retourne une liste de Notes pour un livre donné
 	 * @param id
 	 * @return
 	 */
 	public ArrayList<Note> getBookNotes(int id){
-
 		ArrayList<Note> res = new ArrayList<Note>();
 
 		Statement statement = null;
@@ -220,15 +219,12 @@ public class BD {
 								+ id );
 
 				while (resultSet.next()) {
-
 					res.add(new Note(resultSet.getInt("_id"),resultSet.getString("name"), resultSet
 							.getInt("content_id"),resultSet.getString("added_date"),resultSet.getString("modified_date"),new PdfLoc( resultSet.getString("mark")),new PdfLoc( resultSet
 									.getString("mark_end")), resultSet.getInt("page"),resultSet.getInt("total_page"), resultSet
 									.getString("file_path"), resultSet.getInt("markup_type"),resultSet.getString("marked_text")));
 				}
-
 			} catch (SQLException e) {
-
 				e.printStackTrace();
 			} finally {
 				try {

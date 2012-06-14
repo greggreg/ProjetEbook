@@ -25,13 +25,15 @@ public class Export {
 	private String pathEbook, pathSortie;
 	private static final String endComposedPdf = "_1col.pdf";
 	private BD bd;
+	private String fn;
 
-	public Export(int id_pdf, String pathEbook, String pathSortie, BD bd) throws DocumentException, IOException
+	public Export(int id_pdf, String pathEbook, String pathSortie, BD bd, String fn) throws DocumentException, IOException
 	{
 		this.bd = bd;
 		this.id_pdf = id_pdf;
 		this.pathEbook = pathEbook;
 		this.pathSortie = pathSortie;
+		this.fn = fn;
 		freehand = bd.getBookFreehands(id_pdf);
 		notes = bd.getBookNotes(id_pdf);
 		exporter();
@@ -72,11 +74,11 @@ public class Export {
 	{
 		ArrayList<SVGParser> svg = new ArrayList<SVGParser>();
 		ArrayList<MemoParser> memo = new ArrayList<MemoParser>();
+		String pdfFile = pathEbook+getBD().getBook(id_pdf).getFile_path();
 
 		for (int i=0; i<getFreehand().size(); i++)
 		{
 			String input = pathEbook+getFreehand().get(i).getFile_path();
-			String pdfFile = pathEbook+getBD().getBook(id_pdf).getFile_path();
 			int numPage = (int) getFreehand().get(i).getPage();
 
 			svg.add(new SVGParser(input, pdfFile, numPage+1));
@@ -87,31 +89,30 @@ public class Export {
 			if (getNotes().get(i).getMarkup_type() == 11)
 			{
 				String input = pathEbook+getNotes().get(i).getFile_path();
-				String pdfFile = pathEbook+getBD().getBook(id_pdf).getFile_path();
 				int numPage = (int) getNotes().get(i).getPage();
 				String txtAnnote = getNotes().get(i).getMarked_text();
-
 				memo.add(new MemoParser(input, pdfFile, numPage+1, txtAnnote));
 			}
 		}
-		addAllNotes(svg, memo);
+		addAllNotes(svg, memo, pdfFile);
 	}
 
 
-	private void addAllNotes(ArrayList<SVGParser> svg, ArrayList<MemoParser> memo) throws IOException, DocumentException
+	private void addAllNotes(ArrayList<SVGParser> svg, ArrayList<MemoParser> memo, String pdfFile)
+			throws IOException, DocumentException
 	{
-		PdfReader reader = new PdfReader(svg.get(0).getPdfFile());
+		PdfReader reader = new PdfReader(pdfFile);
 		Rectangle rect = reader.getPageSize(1);
 		float height = rect.getHeight();
 		float width = rect.getWidth();
 
 		int col = 1;
-		if (svg.get(0).getPdfFile().endsWith(endComposedPdf)) //gros bluff!
+		if (pdfFile.endsWith(endComposedPdf)) //gros bluff!
 			col = 2;
 
 		int n = reader.getNumberOfPages();
 		Document doc = new Document(new Rectangle(width, height));
-		PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(getPathSortie() + "output.pdf"));
+		PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(getPathSortie()+"/"+fn));
 		doc.open();
 		PdfContentByte cb = writer.getDirectContent();
 

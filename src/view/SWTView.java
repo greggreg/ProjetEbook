@@ -52,9 +52,10 @@ public class SWTView extends EbookView implements Listener {
 	    listConverted.addListener(SWT.DefaultSelection, new Listener() {
 			public void handleEvent(Event event) {
 				try {
-					int i = list.getSelectionIndices()[0];
+					int i = listConverted.getSelectionIndices()[0];
+					System.err.println(i);
 					Runtime.getRuntime().exec(pdfViewer+" "+listConverted.getItem(i));
-					System.err.println("'"+pdfViewer+" "+listConverted.getItem(i)+"' launched");
+//					System.err.println("'"+pdfViewer+" "+listConverted.getItem(i)+"' launched");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -76,7 +77,7 @@ public class SWTView extends EbookView implements Listener {
 		String input;
 		
 		for (int i : list.getSelectionIndices()) {
-			input = list.getItem(i).split("\\|")[0];
+			input = list.getItem(i).split(" ")[0];
 			getController().notifyEbookChanged(input);
 		}
 	}
