@@ -15,7 +15,7 @@ public class BD {
 	public BD(String path) {
 		try {
 			Class.forName("org.sqlite.JDBC");
-			conn = DriverManager.getConnection("jdbc:sqlite:" + path+"/"+pathToDB);
+			conn = DriverManager.getConnection("jdbc:sqlite:" + path+pathToDB);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
