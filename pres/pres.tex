@@ -1,3 +1,15 @@
+\documentclass[t,12pt]{beamer}
+
+\usepackage[T1]{fontenc} 
+\usepackage[frenchb]{babel}
+\usepackage[utf8]{inputenc}
+
+\usetheme{Berkeley}
+\usecolortheme{dove}
+
+\title{Notes export from an Ebook Sony PRS-T1}
+\author{Tutor: Julien De Antoni\\Grégory Putz, Ahma Bekele, Mathieu Bivert}
+\date{\oldstylenums{June 2012}}
 % ajouter tuteur
 % rajouter plan continu
 % intro
@@ -5,22 +17,6 @@
 % analyse du sujet
 % resultats
 % problèmes & évolution
-
-\documentclass[t,12pt]{beamer}
-
-\usepackage[T1]{fontenc} 
-\usepackage[frenchb]{babel}
-\usepackage[utf8]{inputenc}
-
-%\usetheme{Warsaw}
-\usetheme{Berkeley}
-\usecolortheme{dove}
-
-%\AtBeginSection[]{
-%  \begin{frame}{Sommaire}
-%  \small \tableofcontents[currentsection]
-%  \end{frame} 
-%}
 
 \title{Exportation de notes prises sur un Sony PRS-T1}
 \author{Tuteur: Julien De Antoni\\Grégory Putz, Ahma Bekele, Mathieu Bivert}
@@ -71,7 +67,7 @@
   \begin{itemize}
   \pause \item Sharing notes;
   \pause \item No standardized note taking format.
-  \pause \item Notes stored  on the ebook:
+  \pause \item Notes stored on the ebook:
     \begin{itemize}
       \item half in SQLite;
       \item half in XML (SVG).
@@ -103,8 +99,37 @@
 
 \section{Organisation}
 \begin{frame}
-  \frametitle{Organisation}
-  Zenarchy§
+  \frametitle{Task assignments}
+  Separation in 3 parts :
+  \begin{itemize}
+    \pause \item data recovery and treatment
+	\pause \item exportation of annotation
+	\pause \item user interface
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Task assignments}
+  \begin{itemize}
+    \pause \item database :
+	\begin{itemize}
+		\item study of database architecture
+		\item extraction of necessary information
+		\item permanent communication to target the needs
+	\end{itemize}
+	\pause \item exportation :
+	\begin{itemize}
+		\item study of storage format of the annotations
+		\item parsing of the XML files
+		\item insert annotations in PDF file
+	\end{itemize}
+	\pause \item ui :
+	\begin{itemize}
+		\item MVC pattern
+		\item graphical interface
+		\item console interface
+	\end{itemize}
+  \end{itemize}
 \end{frame}
 
 \section{A solution}
@@ -124,32 +149,41 @@
   We don't neeeeed, no more problems.
 \end{frame}
 
-% \section{Notes format}
-% \begin{frame}
-%   \frametitle{Notes format}
-%   \begin{itemize}
-%     \item PDF standard defines Annotations (§ 8.4);
-%     \pause \item Java classes to manipulate PDF (eg. Qoppa (commercial),
-%       iText (open source, free and commercial)), including annotations;
-%     \pause \item different formats to annotate document (PDF, Epub, etc.)
-%       depending on the software (Okular, Xournal, etc.), with a possibility to
-%       export in PDF.
-%   \end{itemize}
-% \end{frame}
-% 
-% \begin{frame}
-%   \frametitle{Diagram}
-%   \begin{figure}[!ht]
-%     \vfill
-%     \centering
-%     \includegraphics[scale=.5]{diagram.png}
-%   \end{figure}
-% \end{frame}
-
 \section{To conclude}
 \begin{frame}
-  \frametitle{Conclusion}
-  blablabla, we learnt a lot, blablabla, very interesting, blablabla.
+	\frametitle{Outcome}
+	As planned, we succeeded in :
+	\begin{itemize}
+		\pause \item exporting notes from Ebook to PC
+		\pause \item making a portable application
+		\pause \item offering a friendly user interface
+	\end{itemize}
+	Possible extensions :
+	\begin{itemize}
+		\pause \item import notes from PC to Ebook
+		\pause \item manage others formats than PDF
+		\pause \item put keyboard notes in the right place in the text
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Outcome}
+  \begin{itemize}
+    \item Technical point of view :
+	\begin{itemize}
+		\item implementation of different skills
+		\item internal functioning of an Ebook
+		\item use of database
+		\item use of some Java libraries
+		\item data translation between different formats
+	\end{itemize}
+	\pause \item Personal point of view :
+	\begin{itemize}
+		\item improve the skills in team working
+		\item realize a soft that could be used in the future
+		\item give a presentation in English!
+	\end{itemize}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
