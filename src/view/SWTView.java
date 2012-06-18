@@ -14,8 +14,17 @@ import org.eclipse.swt.widgets.Shell;
 
 import controller.EbookController;
 
+/**
+ * Graphical (SWT) view
+ * @author putz
+ */
 public class SWTView extends EbookView implements Listener {
-	public static String pdfViewer =  "mupdf";
+	/* XXX allow the user to set it */
+	public static String pdfViewer =  "okular";
+	/**
+	 * two list containing items from the model, and items
+	 * that had been converted
+	 */
 	org.eclipse.swt.widgets.List list, listConverted;
 	private Display display;
 	private Shell shell;
@@ -55,7 +64,6 @@ public class SWTView extends EbookView implements Listener {
 					int i = listConverted.getSelectionIndices()[0];
 					System.err.println(i);
 					Runtime.getRuntime().exec(pdfViewer+" "+listConverted.getItem(i));
-//					System.err.println("'"+pdfViewer+" "+listConverted.getItem(i)+"' launched");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -69,6 +77,9 @@ public class SWTView extends EbookView implements Listener {
 			list.add(file);
 	}
 
+	/**
+	 * @param e contains the output name of the last converted ebook
+	 */
 	public void ebookChanged(EbookChangedEvent e) {
 		listConverted.add(e.getNewOutput());
 	}

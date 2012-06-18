@@ -8,6 +8,9 @@ import org.jdom2.Element;
 import org.jdom2.Namespace;
 import org.jdom2.input.SAXBuilder;
 
+/**
+ * Parser un fichier représentant une annotation en freehand
+ */
 public class SVGParser {
 
 	private org.jdom2.Document document;
@@ -18,7 +21,13 @@ public class SVGParser {
 		Namespace.getNamespace("", "http://www.w3.org/2000/svg")};
 	private String pdfFile;
 
-		
+	
+	/**
+	 * Constructeur
+	 * @param input Le fichier SVG contenant la note
+	 * @param pdfFile Le fichier PDF à annoter
+	 * @param numPage La page où se trouve l'annotation
+	 */
 	public SVGParser(String input, String pdfFile, int numPage)
 	{
 		SAXBuilder sxb = new SAXBuilder();
@@ -40,10 +49,18 @@ public class SVGParser {
 		arbre[3] = arbre[2].getChild("svg", n[1]);
 	}
 
+	/**
+	 * 
+	 * @return Le fichier PDF à annoter
+	 */
 	public String getPdfFile() {
 		return pdfFile;
 	}
 
+	/**
+	 * 
+	 * @return La liste des coordonnées des points représentant l'annotation
+	 */
 	public ArrayList<String> getPoints()
 	{
 		Iterator<?> i = arbre[3].getChildren("polyline", n[1]).iterator();
@@ -57,6 +74,10 @@ public class SVGParser {
 		return allPoints;
 	}
 
+	/**
+	 * 
+	 * @return La page où se trouve l'annotation
+	 */
 	public int getNumPage() {
 		return numPage;
 	}

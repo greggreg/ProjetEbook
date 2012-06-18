@@ -12,6 +12,10 @@ public class BD {
 	private final static String pdfOnly="b.mime_type == 'application/pdf'";
 	private final static String pathToDB = "Sony_Reader/database/books.db";
 
+	/**
+	 * create a db connection
+	 * @param path path to mount point of the reader
+	 */
 	public BD(String path) {
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -24,6 +28,11 @@ public class BD {
 		}
 	}
 
+	/**
+	 * 
+	 * @param id ebook idea
+	 * @return true if the ebook is a pdf, else false
+	 */
 	public boolean isPdfFile(int id){
 		boolean b=false;
 		Statement statement = null;
@@ -93,8 +102,8 @@ public class BD {
 	}
 
 	/**
-	   * retourne la liste des livres annot���������s (freehand ou note)
-	   */
+	 * retourne la liste des livres annot���������s (freehand ou note)
+	 */
 	/**
 	 * retourne la totalit��������� des livre dans la base
 	 * 

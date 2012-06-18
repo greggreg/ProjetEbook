@@ -1,6 +1,9 @@
 import model.EbookModel;
 import controller.EbookController;
 
+/**
+ * Launcher.
+ */
 public class Main {
 	public static void main(String[] args) {
 		EbookController.viewType type;
@@ -20,6 +23,7 @@ public class Main {
 				System.err.println("exporter [-c] [-i <input directory>] [-o <output directory]");
 				System.exit(0);
 			}
+
 		try {
 			model = new EbookModel(in, out);
 			controller = new EbookController(model, type);

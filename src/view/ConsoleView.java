@@ -10,6 +10,9 @@ import model.EbookChangedEvent;
 
 import controller.EbookController;
 
+/**
+ * Console interface.
+ */
 public class ConsoleView extends EbookView implements PropertyChangeListener {
 	List<String> files;
 	String input;
@@ -18,12 +21,18 @@ public class ConsoleView extends EbookView implements PropertyChangeListener {
 		this(controller, null);
 	}
 
+	/**
+	 * @param controller the controller instance
+	 * @param files list of ebook
+	 */
 	public ConsoleView(EbookController controller, List<String> files) {
 		super(controller);
-		
 		buildView(files);
 	}
 	
+	/**
+	 * @param files files of ebook
+	 */
 	public void buildView(List<String> files) {
 		this.files = files;
 	}
@@ -32,6 +41,9 @@ public class ConsoleView extends EbookView implements PropertyChangeListener {
 		System.out.println(e.getNewOutput() + " build from " + input);
 	}
 
+	/**
+	 * @param arg0 contains the output name of the last converted ebook
+	 */
 	public void propertyChange(PropertyChangeEvent arg0) {
 		input = (String)arg0.getNewValue();
 		getController().notifyEbookChanged(input);

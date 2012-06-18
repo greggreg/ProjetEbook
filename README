@@ -1,1 +1,5 @@
-fichier magnifique!!
+La Javadoc est disponible dans le dossier doc/
+
+Pour lancer le logiciel,
+java -jar export_notes.jar [-c] [-i <inputDir>] [-o <outputDir>]
+(veiller à conserver le dossier build/ au même niveau que le .jar)
